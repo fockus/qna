@@ -4,10 +4,10 @@ class Question < ActiveRecord::Base
 	attr_writer :tags_names
 
 	validates :title,
-						length: {in: 5..100}, presence: true
+						validates_length_of: {in: 5..100}, presence: true
 
 	validates :body,
-						length: {in: 5..1000}, presence: true
+						validates_length_of: {in: 5..1000}, presence: true
 
 	#validates_with TagsNamesValidator
 

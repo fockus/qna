@@ -32,7 +32,7 @@ group :test, :development do
 end
 
 group :test do
-	gem 'shoulda-matchers'
+	gem 'shoulda-matchers', require: false
 	gem 'faker', '~> 1.4.3'
 	gem 'capybara', '~> 2.4.4'
 	gem 'database_cleaner', '~> 1.3.0'
