@@ -5,7 +5,7 @@ gem 'rails', '4.1.8'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+#gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -28,11 +28,16 @@ gem 'spring', group: :development
 group :test, :development do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
-# gem 'debugger'
+  #gem 'debugger'
 end
 
 group :test do
 	gem 'shoulda-matchers'
+	gem 'faker', '~> 1.4.3'
+	gem 'capybara', '~> 2.4.4'
+	gem 'database_cleaner', '~> 1.3.0'
+	gem 'launchy', '~> 2.4.3'
+	gem 'selenium-webdriver', '~> 2.44.0'
 end
 
 # Use ActiveModel has_secure_password
@@ -44,9 +49,18 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
 # Шаблонизатор Slim
 gem 'slim-rails'
+
+# UI-kit
+gem 'sass-rails', :git => 'https://github.com/zakelfassi/sass-rails' # Until the gem is officially updated.
+gem 'bootflat-rails'
+
+#autoprefixer
+gem 'autoprefixer-rails', '~> 4.0.2'
+
+gem 'simple_form'
+
+# Foreign keys
+gem 'foreigner'
 

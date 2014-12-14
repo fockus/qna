@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206171203) do
+ActiveRecord::Schema.define(version: 20141206173631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "question_tags", force: true do |t|
+    t.integer  "question_id", null: false
+    t.integer  "tag_id",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "question_tags", ["question_id"], name: "index_question_tags_on_question_id", using: :btree
+  add_index "question_tags", ["tag_id"], name: "index_question_tags_on_tag_id", using: :btree
 
   create_table "questions", force: true do |t|
     t.string   "title"
@@ -22,5 +32,14 @@ ActiveRecord::Schema.define(version: 20141206171203) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "tags", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_foreign_key "question_tags", "questions", name: "question_tags_question_id_fk"
+  add_foreign_key "question_tags", "tags", name: "question_tags_tag_id_fk"
 
 end
