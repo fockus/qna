@@ -28,7 +28,7 @@ gem 'spring', group: :development
 group :test, :development do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
-	gem 'debugger', group: [:development, :test]
+# gem 'debugger'
 end
 
 group :test do
