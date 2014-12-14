@@ -28,6 +28,7 @@ gem 'spring', group: :development
 group :test, :development do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
+	gem 'debugger', group: [:development, :test]
 end
 
 group :test do
@@ -45,4 +46,7 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Шаблонизатор Slim
+gem 'slim-rails'
 
