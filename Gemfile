@@ -28,11 +28,11 @@ gem 'spring', group: :development
 group :test, :development do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
-  #gem 'debugger'
+	gem 'pry'
 end
 
 group :test do
-	gem 'shoulda-matchers', require: false
+	gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
 	gem 'faker', '~> 1.4.3'
 	gem 'capybara', '~> 2.4.4'
 	gem 'database_cleaner', '~> 1.3.0'

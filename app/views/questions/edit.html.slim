@@ -1,7 +1,7 @@
 .row
 	.col-xs-8 class='col-xs-offset-2'
+        = link_to 'Back', questions_path, :class => 'btn btn-small'
 		h1 Edit question
 		= render 'form'
-		= link_to 'Show', @question
-		|&nbsp; 
-		= link_to 'Back', questions_path
+        br
+        = link_to 'Show', @question, :class => 'btn btn-block'

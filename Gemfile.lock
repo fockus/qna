@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/thoughtbot/shoulda-matchers.git
+  revision: 51283c0450f4a5fdafdb5e6e7e007599dcce4210
+  specs:
+    shoulda-matchers (2.7.0)
+      activesupport (>= 3.0.0)
+
+GIT
   remote: https://github.com/zakelfassi/sass-rails
   revision: 0d4013878dd18440c98da4ffa62208e7700f2477
   specs:
@@ -56,6 +63,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.5.5)
       ffi (~> 1.0, >= 1.0.11)
+    coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -90,6 +98,7 @@ GEM
       addressable (~> 2.3)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.1)
     minitest (5.5.0)
@@ -97,6 +106,10 @@ GEM
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     pg (0.17.1)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -144,8 +157,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
-    shoulda-matchers (2.7.0)
-      activesupport (>= 3.0.0)
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -157,6 +168,7 @@ GEM
       activesupport (>= 3.0, < 4.2)
       railties (>= 3.0, < 4.2)
       slim (~> 2.0)
+    slop (3.6.0)
     spring (1.2.0)
     sprockets (2.11.0)
       hike (~> 1.2)
@@ -198,12 +210,13 @@ DEPENDENCIES
   jquery-rails
   launchy (~> 2.4.3)
   pg
+  pry
   rails (= 4.1.8)
   rspec-rails
   sass-rails!
   sdoc (~> 0.4.0)
   selenium-webdriver (~> 2.44.0)
-  shoulda-matchers
+  shoulda-matchers!
   simple_form
   slim-rails
   spring

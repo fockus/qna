@@ -5,7 +5,8 @@
 				= @question.title
 			p.lead
 				= @question.body
-                = @question.tags.nil? || @question.tags.length == 0 ? '' : @question.tags.collect(&:name).join(' ')
+			p.lead
+                = render partial: 'tags', locals: {tags: @question.tags}
 			.text-right
 				
 				.btn-group role='group' aria-label='buttons for managing question'
