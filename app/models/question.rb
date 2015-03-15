@@ -3,12 +3,8 @@ class Question < ActiveRecord::Base
 	has_many :question_tags, inverse_of: :question, :dependent => :destroy
 	attr_writer :tags_names
 
-	validates :title,
-						length: {in: 5..100}, presence: true
-
-	validates :body,
-						length: {in: 5..1000}, presence: true
-
+	validates :title, length: {in: 5..100}, presence: true
+	validates :body, length: {in: 5..1000}, presence: true
 	validates_with TagsNamesValidator
 
 	# returns tags in string, separator space
@@ -28,7 +24,6 @@ class Question < ActiveRecord::Base
 			if self.tags.index { |s| s.name == tag_name }.nil?
 				tag = Tag.where(name: tag_name).first
 				self.tags.push(tag.nil? ? Tag.new(:name => tag_name) : tag)
-				#tag = self.tags.find_or_create_by_name(tag_name)
 			end
 		end
 	end
