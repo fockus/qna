@@ -11,12 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141206173631) do
+ActiveRecord::Schema.define(version: 20150315220819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "question_tags", force: true do |t|
+  create_table "answers", force: :cascade do |t|
+    t.text     "comment",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "answers", ["comment"], name: "index_answers_on_comment", using: :btree
+
+  create_table "question_tags", force: :cascade do |t|
     t.integer  "question_id", null: false
     t.integer  "tag_id",      null: false
     t.datetime "created_at"
@@ -26,14 +34,14 @@ ActiveRecord::Schema.define(version: 20141206173631) do
   add_index "question_tags", ["question_id"], name: "index_question_tags_on_question_id", using: :btree
   add_index "question_tags", ["tag_id"], name: "index_question_tags_on_tag_id", using: :btree
 
-  create_table "questions", force: true do |t|
+  create_table "questions", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tags", force: true do |t|
+  create_table "tags", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -41,5 +49,4 @@ ActiveRecord::Schema.define(version: 20141206173631) do
 
   add_foreign_key "question_tags", "questions", name: "question_tags_question_id_fk"
   add_foreign_key "question_tags", "tags", name: "question_tags_tag_id_fk"
-
 end

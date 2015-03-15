@@ -62,5 +62,6 @@ gem 'autoprefixer-rails', '~> 4.0.2'
 gem 'simple_form'
 
 # Foreign keys
-gem 'foreigner'
+#gem 'foreigner'
+gem 'mailboxer', :git => 'git://github.com/div/mailboxer.git', :branch => 'rails42-foreigner'
 
