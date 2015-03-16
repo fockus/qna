@@ -23,16 +23,23 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring', group: :development
+#gem 'spring', group: :development
 
 group :test, :development do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
-	gem 'pry'
+	# Call 'byebug' anywhere in the code to stop execution and get a debugger console
+	gem 'byebug'
+	# Access an IRB console on exception pages or by using <%= console %> in views
+	gem 'web-console', '~> 2.0'
+	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+	gem 'spring'
 end
 
+
 group :test do
-	gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
+	#gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
+	gem 'shoulda-matchers'
 	gem 'faker', '~> 1.4.3'
 	gem 'capybara', '~> 2.4.4'
 	gem 'database_cleaner', '~> 1.3.0'
@@ -62,5 +69,5 @@ gem 'autoprefixer-rails', '~> 4.0.2'
 gem 'simple_form'
 
 # Foreign keys
-gem 'foreigner'
+gem 'mailboxer', :git => 'git://github.com/div/mailboxer.git', :branch => 'rails42-foreigner'
 

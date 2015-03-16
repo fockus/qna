@@ -3,8 +3,9 @@ FactoryGirl.define do
     title { Faker::Hacker.say_something_smart }
     body { Faker::Lorem.paragraph }
 
-    factory :invalid_question do
+    factory :invalid_question, class: "Question" do
       title nil
+      body nil
     end
   end
 end
