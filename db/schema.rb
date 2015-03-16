@@ -17,12 +17,13 @@ ActiveRecord::Schema.define(version: 20150315220819) do
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
-    t.text     "comment",    null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text     "comment",     null: false
+    t.integer  "question_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "answers", ["comment"], name: "index_answers_on_comment", using: :btree
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
 
   create_table "question_tags", force: :cascade do |t|
     t.integer  "question_id", null: false
@@ -35,10 +36,10 @@ ActiveRecord::Schema.define(version: 20150315220819) do
   add_index "question_tags", ["tag_id"], name: "index_question_tags_on_tag_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "title"
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "title",      null: false
+    t.text     "body",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tags", force: :cascade do |t|
@@ -47,6 +48,9 @@ ActiveRecord::Schema.define(version: 20150315220819) do
     t.datetime "updated_at"
   end
 
-  add_foreign_key "question_tags", "questions", name: "question_tags_question_id_fk"
-  add_foreign_key "question_tags", "tags", name: "question_tags_tag_id_fk"
+  add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
+
+  add_foreign_key "answers", "questions"
+  add_foreign_key "question_tags", "questions"
+  add_foreign_key "question_tags", "tags"
 end
