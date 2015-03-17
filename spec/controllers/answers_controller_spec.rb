@@ -76,8 +76,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'does not change answer attr' do
         answer.reload
-        #expect(answer.comment).to eq "answer text"
-        true
+        expect{answer}.to_not change{Answer.count}
       end
 
       it 're-render edit view' do
