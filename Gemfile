@@ -38,7 +38,6 @@ end
 
 
 group :test do
-	#gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers'
 	gem 'shoulda-matchers'
 	gem 'faker', '~> 1.4.3'
 	gem 'capybara', '~> 2.4.4'

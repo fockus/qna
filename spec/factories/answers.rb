@@ -3,10 +3,9 @@ FactoryGirl.define do
     comment { Faker::Lorem.paragraph }
     question
 
-    factory :invalid_answer, class: "Answer" do
+    factory :invalid_answer, class: 'Answer' do
       comment nil
-      question
+      question nil
     end
   end
 end
-
