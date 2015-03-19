@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
 	before_action :load_question, only: [:show, :edit, :update, :destroy]
 
 	def index
@@ -16,19 +17,27 @@ class QuestionsController < ApplicationController
 	end
 
 	def create
-		@question = Question.new question_params
-		@question.valid? ? save_and_notificate(question: @question, action: 'create') : render(action: 'new')
+    @question = current_user.questions.new question_params
+		if @question.valid?
+      save_and_notificate(question: @question, action: 'create')
+    else
+      redirect_to question, notice: 'You must fill all fields.', action: 'new'
+    end
 	end
 
 	def update
-		@question.assign_attributes(question_params)
+		@question.assign_attributes question_params
 		@question.valid? ? save_and_notificate(question: @question, action: 'update') : render(action: 'edit')
 	end
 
-	def destroy
-		@question.destroy
-		redirect_to questions_path
-	end
+  def destroy
+    if @question.user_id == current_user.id
+      @question.destroy
+      redirect_to questions_path, notice: 'You question successfully deleted.'
+    else
+      redirect_to questions_path, notice: 'You cant delete this question.'
+    end
+  end
 
 	private
 
@@ -42,11 +51,12 @@ class QuestionsController < ApplicationController
 
 	def save_and_notificate(hash, question=hash[:question])
 		question.assign_tags
-		question.save
+		question.save!
 		if hash[:action] == 'update'
-			redirect_to question, notice: 'Question was successfully updated.', action: 'index'
+			redirect_to question, notice: 'Your question successfully updated.', action: 'index'
 		elsif hash[:action] == 'create'
-			redirect_to question, notice: 'Question was successfully created.', action: 'index'
+			redirect_to question, notice: 'Your question successfully created.', action: 'index'
 		end
-	end
+  end
+
 end
