@@ -10,6 +10,25 @@
 			.text-right
 				
 				.btn-group role='group' aria-label='buttons for managing question'
-					= link_to 'Back', questions_path, :class => 'btn btn-default'	
-					= link_to 'Edit', edit_question_path(@question), :class => 'btn btn-default'
-					= link_to 'Delete', @question, :method => :delete, :class => 'btn btn-default'
+                  = link_to 'Back', questions_path, :class => 'btn btn-default'
+
+                  - if current_user && @question.user_id == current_user.id
+                    = link_to 'Edit', edit_question_path(@question), :class => 'btn btn-default'
+                    = link_to 'Delete', @question, :method => :delete, :class => 'btn btn-default'
+
+
+
+h4 Answers
+.answer
+  - @question.answers.each do |answer|
+    p= answer.body
+    - if current_user && answer.user_id == current_user.id
+      small= link_to 'Delete answer', question_answer_path(@question, answer.id), method: :delete
+  hr
+
+- if current_user
+  small= link_to 'Create answer', "/questions/#{@question.id}/answers/new"
+- else
+  | Sign in or sign up to leave answers
+  = link_to 'Sign in', new_user_session_path
+  = link_to 'Sign up', new_user_registration_path
