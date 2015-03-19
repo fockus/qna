@@ -2,6 +2,7 @@ class Question < ActiveRecord::Base
 	has_many :answers, dependent: :destroy
 	has_many :tags, through: :question_tags
 	has_many :question_tags, inverse_of: :question, :dependent => :destroy
+  belongs_to :user
 	attr_writer :tags_names
 
 	validates :title, length: {in: 5..100}, presence: true
