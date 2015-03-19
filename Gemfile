@@ -34,6 +34,8 @@ group :test, :development do
 	gem 'web-console', '~> 2.0'
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 	gem 'spring'
+  gem 'pry'
+  gem 'pry-rails'
 end
 
 
@@ -57,6 +59,9 @@ end
 
 # Шаблонизатор Slim
 gem 'slim-rails'
+
+# Авторизация
+gem 'devise'
 
 # UI-kit
 gem 'sass-rails', :git => 'https://github.com/zakelfassi/sass-rails' # Until the gem is officially updated.
