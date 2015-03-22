@@ -119,7 +119,6 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
 
-
   describe 'authorized user PATCH #update' do
     sign_in_user
     context 'with valid attr' do

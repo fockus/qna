@@ -21,7 +21,8 @@ class QuestionsController < ApplicationController
 		if @question.valid?
       save_and_notificate(question: @question, action: 'create')
     else
-      redirect_to question, notice: 'You must fill all fields.', action: 'new'
+      flash[:notice] = 'You must fill all fields.'
+      render :new
     end
 	end
 
@@ -35,7 +36,7 @@ class QuestionsController < ApplicationController
       @question.destroy
       redirect_to questions_path, notice: 'You question successfully deleted.'
     else
-      redirect_to questions_path, notice: 'You cant delete this question.'
+      redirect_to questions_path, notice: 'You can\'t delete this question.'
     end
   end
 
@@ -53,9 +54,9 @@ class QuestionsController < ApplicationController
 		question.assign_tags
 		question.save!
 		if hash[:action] == 'update'
-			redirect_to question, notice: 'Your question successfully updated.', action: 'index'
+			redirect_to question, notice: 'Your question successfully update.'
 		elsif hash[:action] == 'create'
-			redirect_to question, notice: 'Your question successfully created.', action: 'index'
+			redirect_to question, notice: 'Your question successfully create.'
 		end
   end
 

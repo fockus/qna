@@ -7,7 +7,7 @@ feature 'View questions' do
   given!(:answer) { create :answer, question: question }
 
   scenario 'user can view questions' do
-    log_in(user)
+    sign_in(user)
     visit root_path
     click_on question.title
 
