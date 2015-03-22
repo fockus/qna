@@ -29,6 +29,9 @@ h4 Answers
 - if current_user
   small= link_to 'Create answer', "/questions/#{@question.id}/answers/new"
 - else
-  | Sign in or sign up to leave answers
-  = link_to 'Sign in', new_user_session_path
-  = link_to 'Sign up', new_user_registration_path
+  p
+    | Sign in or sign up to leave answers
+    br
+    = link_to 'Sign in', new_user_session_path
+    | &nbsp;
+    = link_to 'Sign up', new_user_registration_path
