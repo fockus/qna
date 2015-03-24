@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :load_question
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :load_question, except: [:index, :show]
   before_action :load_answer, only: [:edit, :update, :destroy]
 
   def new
@@ -7,10 +8,11 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = current_user.answers.new answer_params.merge(question: @question)
     if @answer.save
-      redirect_to @answer.question
+      redirect_to @question, notice: 'Your answer successfully created.'
     else
+      flash[:notice] = 'Answer cant be blank.'
       render :new
     end
   end
@@ -20,7 +22,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if @answer.update(answer_params)
+    if @answer.update answer_params
       redirect_to @answer.question
     else
       render :edit
@@ -28,7 +30,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy
+    if @answer.user_id == current_user.id
+      @answer.destroy
+      flash[:notice] = 'Answer successfully deleted.'
+    else
+      flash[:notice] = 'You cant delete this question.'
+    end
     redirect_to @answer.question
   end
 
