@@ -94,16 +94,29 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
     before { answer }
 
-    it 'delete answer from database' do
-      answer_for_del = Answer.create(comment: answer.comment, user: @user, question: question)
+    context 'when delete own answer' do
+      before do
+        @user.answers << answer
+      end
 
-      expect { delete :destroy, question_id: question.id, id: answer_for_del }.to change(Answer, :count).by(-1)
-      expect(response).to redirect_to question
+      it 'deletes answer by id' do
+        expect { delete :destroy, question_id: question, id: answer }
+            .to change(question.answers, :count).by(-1)
+      end
+
+      it 'redirects to question page' do
+        delete :destroy, question_id: question, id: answer
+
+        expect(response).to redirect_to question
+      end
     end
 
-    it 'redirect to answer/index view' do
-      delete :destroy, question_id: question, id: answer
-      expect(response).to redirect_to question_path(assigns(:answer).question)
+    context 'when delete someone answer' do
+      it 'does not delete answer by id' do
+        answer
+        expect { delete :destroy, question_id: question, id: answer }
+            .to_not change(Answer, :count)
+      end
     end
   end
 end

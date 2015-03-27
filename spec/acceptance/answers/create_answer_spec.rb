@@ -31,6 +31,7 @@ feature 'Create answer', %q{
     fill_in 'Comment', with: ''
     click_on 'Create'
 
+    #save_and_open_page
     expect(page).to have_content 'Answer cant be blank.'
     expect(current_path).to eq question_answers_path(question)
   end

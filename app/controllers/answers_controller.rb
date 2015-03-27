@@ -4,14 +4,15 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: [:edit, :update, :destroy]
 
   def new
-    @answer = @question.answers.new
+    @answer = Answer.new
   end
 
   def create
-    @answer = current_user.answers.new answer_params.merge(question: @question)
+    @answer = current_user.answers.new(answer_params.merge(question: @question))
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created.'
     else
+      #redirect_to new_question_answer_path, :notice => 'items updated'
       flash[:notice] = 'Answer cant be blank.'
       render :new
     end
