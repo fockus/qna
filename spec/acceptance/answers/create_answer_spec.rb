@@ -14,7 +14,6 @@ feature 'Create answer', %q{
     visit root_path
     click_on question.title
     click_on 'Create answer'
-    #save_and_open_page
     fill_in 'Comment', with: 'test answer'
     click_on 'Create'
 
@@ -32,7 +31,7 @@ feature 'Create answer', %q{
     click_on 'Create'
 
     #save_and_open_page
-    expect(page).to have_content 'Answer cant be blank.'
+    expect(page).to have_content('Answer cant be blank.')
     expect(current_path).to eq question_answers_path(question)
   end
 
@@ -40,6 +39,7 @@ feature 'Create answer', %q{
     visit root_path
     click_on question.title
 
-    expect(page).to have_no_content 'Create answer'
+    expect(page).to have_no_content('Create answer')
+    expect(page).to have_link('Sign in')
   end
 end

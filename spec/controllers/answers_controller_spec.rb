@@ -100,8 +100,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it 'deletes answer by id' do
-        expect { delete :destroy, question_id: question, id: answer }
-            .to change(question.answers, :count).by(-1)
+        expect { delete :destroy, question_id: question, id: answer }.to change(question.answers, :count).by(-1)
       end
 
       it 'redirects to question page' do
@@ -114,8 +113,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'when delete someone answer' do
       it 'does not delete answer by id' do
         answer
-        expect { delete :destroy, question_id: question, id: answer }
-            .to_not change(Answer, :count)
+        expect { delete :destroy, question_id: question, id: answer }.to_not change(Answer, :count)
       end
     end
   end

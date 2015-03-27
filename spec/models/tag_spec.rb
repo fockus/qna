@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Question, :type => :model do
+RSpec.describe Tag, :type => :model do
   it { should have_many :question }
   it { should have_many :question_tags }
 

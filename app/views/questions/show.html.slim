@@ -25,7 +25,7 @@ h4 Answers
   hr
 
 - if current_user
-  small= link_to 'Create answer', "/questions/#{@question.id}/answers/new"
+  small= link_to 'Create answer', new_question_answer_path(@question)
 - else
   p
     | Sign in or sign up to leave answers

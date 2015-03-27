@@ -18,7 +18,6 @@ class Question < ActiveRecord::Base
 
   protected
     def assign_tags
-      #@question.valid?
       new_names = @tags_names.split(' ')
       # removes all tags in the model, except those that in new string
       self.tags.each do |tag|
