@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
 
+  let(:user) { create :user }
   let(:question) { create :question }
   let(:questions) { create_list(:question, 3) }
 
@@ -21,43 +22,67 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #show' do
     before { get :show, id: question }
-    it 'assigns the requested question to @question' do
+
+    it 'assigns questions to @question' do
       expect(assigns(:question)).to eq question
     end
-    it 'renders show view' do
+
+    it 'render show view' do
       expect(response).to render_template :show
     end
   end
 
 
-  describe 'GET #new' do
+  describe 'authorized user GET #new' do
+    sign_in_user
     before { get :new }
-    it 'assigns a new Question to @question' do
+
+    it 'assigns new question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
-    it 'render new view' do
+
+    it 'renders new view' do
       expect(response).to render_template :new
     end
   end
 
 
-  describe 'GET #edit' do
+  describe 'non-authorized user GET #new' do
+    before { get :new }
+    it 'redirect to log in form' do
+      expect(response).to redirect_to new_user_session_path
+    end
+  end
+
+
+  describe 'authorized user GET #edit' do
+    sign_in_user
     before { get :edit, id: question }
 
-    it 'assigns the requested question to @question' do
+    it 'assigns requested question to @question' do
       expect(assigns(:question)).to eq question
     end
 
-    it 'renders edit view' do
+    it 'render edit view' do
       expect(response).to render_template :edit
     end
   end
 
-  describe 'POST #create' do
+  describe 'non-authorized user GET #edit' do
+    before { get :edit, id: question}
+    it 'resirect to log in form' do
+      expect(response).to redirect_to new_user_session_path
+    end
+  end
+
+
+  describe 'authorized user POST #create' do
+    sign_in_user
     context 'with valid attribures' do
       it 'saves the new question on the database' do
         expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
       end
+
       it 'redirect to show view' do
         post :create, question: attributes_for(:question)
         expect(response).to redirect_to question_path(assigns(:question))
@@ -65,57 +90,103 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      it 'does not save the question' do
-        expect { post :create, question: attributes_for(:invalid_question)}.to_not change(Question, :count)
+      it 'does not save new question on the database' do
+        expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
       end
 
-      it 're-renders new view' do
+      it 're-render new view' do
         post :create, question: attributes_for(:invalid_question)
         expect(response).to render_template :new
       end
     end
   end
 
-  describe 'PATCH #update' do
-    before { question }
-    context 'valid attributes' do
-      it 'assigns the requested question to @question' do
+
+  describe 'non-authorized user POST #create' do
+    context 'with valid attr' do
+      it 'dont save and redirect to new_user_session_path' do
+        expect { post :create, question: attributes_for(:question) }.to_not change(Question, :count)
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    context 'with invalid attr' do
+      it 'dont save and redirect to new_user_session_path' do
+        expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
+
+  describe 'authorized user PATCH #update' do
+    sign_in_user
+    context 'with valid attr' do
+      it 'assigns the requested question with @question' do
         patch :update, id: question, question: attributes_for(:question)
         expect(assigns(:question)).to eq question
       end
+
       it 'changes question attributes' do
         patch :update, id: question, question: { title: 'new title', body: 'new body'}
         question.reload
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
       end
-      it 'redirects to the updated question' do
+
+      it 'redirect to the updated question' do
         patch :update, id: question, question: attributes_for(:question)
         expect(response).to redirect_to question
       end
     end
+
     context 'invalid attributes' do
-      before { patch :update, id: question, question: {title: 'new title', body: nil} }
+      before { patch :update, id: question, question: { title: 'new title', body: nil } }
+
       it 'does not change question attributes' do
         question.reload
         expect{question}.to_not change{Question.count}
       end
-      it 're-renders edit view' do
+
+      it 're-render edit view' do
         expect(response).to render_template :edit
       end
     end
   end
 
-  describe 'DELETE #destroy' do
-    before { question }
+  describe 'non-authorized user PATCH #update' do
+    context 'with valid attr' do
+      it 'not assigns the requested question with @question' do
+        patch :update, id: question, question: attributes_for(:question)
+        expect(response).to redirect_to new_user_session_path
+      end
 
-    it 'deletes question' do
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      it 'changes question attributes' do
+        patch :update, id: question, question: { title: 'new title', body: 'new body'}
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
+
+  describe 'authorized user DELETE #destroy' do
+    sign_in_user
+    it 'delete his question from database' do
+      question_for_del = Question.create(title: question.title, body: question.body, user_id: @user.id)
+      expect { delete :destroy, id: question_for_del }.to change(Question, :count).by(-1)
+      expect(response).to redirect_to questions_path
     end
 
-    it 'redirect to index view' do
-      delete :destroy, id: question
-      expect(response).to redirect_to questions_path
+    it 'delete other question from database' do
+      question = Question.create(title: 'Fish question', body: 'Fish text', user_id: user)
+      expect{ delete :destroy, id: question }.to_not change(Question, :count)
+    end
+  end
+
+  describe 'non-authorized user DELETE #destroy' do
+    it 'not delete his question from database' do
+      question
+      expect { delete :destroy, id: question }.to_not change(Question, :count)
     end
   end
 

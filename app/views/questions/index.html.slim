@@ -1,11 +1,14 @@
 .row
 	.col-xs-12 class='starter-template text-center'
-		h1 Q and A
+		h1 Question & answer
 		p.lead
 		  | This is a short list of problems which humanity tries to solve in their everyday life.
 		.text-center
-			= link_to 'Ask question', new_question_path, :class => 'btn btn-primary btn-lg'
-			hr
+            - if user_signed_in?
+              = link_to 'Ask question', new_question_path, :class => 'btn btn-primary btn-lg'
+            - else
+              = link_to 'Sign in', new_user_session_path, :class => 'btn btn-primary btn-lg'
+hr
 .row
 	.col-xs-6 class='col-xs-offset-3'
 		.list-group

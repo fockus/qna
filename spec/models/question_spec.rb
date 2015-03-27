@@ -12,9 +12,3 @@ RSpec.describe Question, type: :model do
   it { should validate_length_of(:body).is_at_least(5).is_at_most(1000) }
 
 end
-
-
-
-
-
-

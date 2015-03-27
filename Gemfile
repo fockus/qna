@@ -29,11 +29,14 @@ group :test, :development do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
 	# Call 'byebug' anywhere in the code to stop execution and get a debugger console
-	gem 'byebug'
+	#gem 'byebug'
+  gem 'better_errors', '~> 2.1.1'
 	# Access an IRB console on exception pages or by using <%= console %> in views
 	gem 'web-console', '~> 2.0'
 	# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 	gem 'spring'
+  gem 'pry'
+  gem 'pry-rails'
 end
 
 
@@ -58,12 +61,15 @@ end
 # Шаблонизатор Slim
 gem 'slim-rails'
 
+# Авторизация
+gem 'devise'
+
 # UI-kit
 gem 'sass-rails', :git => 'https://github.com/zakelfassi/sass-rails' # Until the gem is officially updated.
 gem 'bootflat-rails'
 
 #autoprefixer
-gem 'autoprefixer-rails', '~> 4.0.2'
+#gem 'autoprefixer-rails', '~> 4.0.2'
 
 gem 'simple_form'
 
